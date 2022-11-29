@@ -1,0 +1,59 @@
+<div class="container mx-auto m-8">
+  <h1 class="text-3xl">
+    Ihr Warenkorb:
+  </h1>
+
+  <div *ngFor="let product of cartItems | mapProductArray" class="container mx-auto p-4 m-4 shadow rounded space-y-2 flex">
+    <div class="flex-none w-48 relative">
+      <img src="{{product.image}}" alt="" class="absolute inset-0 w-full h-full object-cover" />
+    </div>
+    <div class="flex-auto p-6">
+      <div class="flex flex-wrap">
+        <h1 class="flex-auto text-lg font-semibold text-slate-900">
+          {{ product.name }}
+        </h1>
+        <div class="text-lg font-semibold text-slate-500">
+          {{product.price | currency:'EUR'}}
+        </div>
+        <div class="w-full flex-none text-sm font-medium text-slate-700 mt-2 my-2">
+          Menge: {{product.qty}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="cartIsEmpty()" class="container mx-auto p-4 m-4 shadow rounded space-y-2 flex">
+    <div class="flex-auto p-6">
+      <div class="flex flex-wrap">
+        <h1 class="flex-auto text-lg text-slate-900">
+          Ihr Warenkorb ist leer
+        </h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto p-4 m-4 shadow rounded space-y-2">
+    <h3 class="text-xl">
+      Zusammenfassung
+    </h3>
+    <table class="table-auto p-4">
+      <tbody>
+        <tr>
+          <td>Zwischensumme (exkl. MwSt.)</td><td class="px-4 py-2 text-right">{{interim_sum() | currency:'EUR'}}</td>
+        </tr>
+        <tr>
+          <td>MwSt.</td><td class="px-4 py-2 text-right">{{tax() | currency:'EUR'}}</td>
+        </tr>
+        <tr>
+          <td>Versandkosten</td><td class="px-4 py-2 text-right">{{delivery_fee() | currency:'EUR'}}</td>
+        </tr>
+        <tr>
+          <td class="text-l font-bold ">Gesamtsumme</td><td class="font-bold px-4 py-2 text-right">{{total_sum() | currency:'EUR'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="px-4 py-2 bg-sky-500 text-white rounded" (click)="goToCheckout()">
+      <span class="p-4 align-top">Zur Kasse</span>
+      <mat-icon aria-hidden="false" aria-label="Home" fontIcon="shopping_cart_checkout"></mat-icon>
+    </button>
+  </div>
+</div>
